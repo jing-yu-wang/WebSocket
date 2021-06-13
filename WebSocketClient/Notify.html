@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>WebSocket DEMO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        ul,
+        li {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+    </style>
+    <script src="Scripts/jquery.min.js"></script>
+</head>
+<body>
+    <script>
+        let wsc;
+        (function () {
+            if ("WebSocket" in window) {
+                // init the websocket client
+                wsc = new WebSocket("ws://localhost:5000/notify");
+
+                wsc.onopen = function () {
+                    console.log("connected");
+                    wsc.send('Client Connected.');
+                };
+                wsc.onclose = function () {
+                    console.log("closed");
+                };
+                wsc.onmessage = function (e) {
+                    var data = JSON.parse(e.data);
+                    console.log(data.message);
+                };
+            }
+        })();
+    </script>
+</body>
+</html>
